@@ -13,6 +13,7 @@ public class Config {
   private GraphInitColorPolicy initColorPolicy;
   private NodeSelectionPolicy nodeSelectionPolicy;
   private Float alpha;
+  private Boolean annealing;
 
   public Config setAlpha(Float alpha) {
     this.alpha = alpha;
@@ -71,6 +72,11 @@ public class Config {
 
   public Config setUniformRandSampleSize(Integer rnd_list_size) {
     this.uniformRandomSampleSize = rnd_list_size;
+    return this;
+  }
+
+  public Config setAnnealing(Boolean annealing) {
+    this.annealing = annealing;
     return this;
   }
 
@@ -160,6 +166,10 @@ public class Config {
 
   public Config createJabejaConfig() {
     return new Config();
+  }
+
+  public Boolean isAnnealing() {
+    return annealing;
   }
 
 }

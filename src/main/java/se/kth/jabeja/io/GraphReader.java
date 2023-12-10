@@ -28,7 +28,8 @@ public class GraphReader {
    * @param graphFilePath
    * @return
    */
-  public HashMap<Integer, Node> readGraph(final String graphFilePath, final GraphInitColorPolicy colorPolicy, final int noOfPartitions) {
+  public HashMap<Integer, Node> readGraph(final String graphFilePath, final GraphInitColorPolicy colorPolicy,
+      final int noOfPartitions) {
     final HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
     try {
       String strLine;
@@ -73,7 +74,6 @@ public class GraphReader {
           neighbours.add(Integer.parseInt(parts[i]));
         }
 
-
         int color = getColor(numNodes, noOfPartitions, id, colorPolicy);
 
         Node node = new Node(id, color);
@@ -88,7 +88,6 @@ public class GraphReader {
     printColorDistribution(nodes);
     return nodes;
   }
-
 
   /**
    * Generate a color according to the policy.

@@ -37,8 +37,11 @@ public class CLI {
   @Option(name = "-seed", usage = "Seed.")
   private int SEED = 0;
 
-  @Option(name = "-alpha", usage = "Alpah parameter")
+  @Option(name = "-alpha", usage = "Alpha parameter")
   private float ALPHA = 2;
+
+  @Option(name = "-annealing", usage = "Is simulated annealing")
+  private boolean ANNEALING = false;
 
   @Option(name = "-randNeighborsSampleSize", usage = "Number of random neighbors sample size.")
   private int randNeighborsSampleSize = 3;
@@ -67,7 +70,8 @@ public class CLI {
         graphInitColorSelectionPolicy = GraphInitColorPolicy.RANDOM;
       } else if (GRAPH_INIT_COLOR_SELECTION_POLICY.compareToIgnoreCase(GraphInitColorPolicy.BATCH.toString()) == 0) {
         graphInitColorSelectionPolicy = GraphInitColorPolicy.BATCH;
-      } else if (GRAPH_INIT_COLOR_SELECTION_POLICY.compareToIgnoreCase(GraphInitColorPolicy.ROUND_ROBIN.toString()) == 0) {
+      } else if (GRAPH_INIT_COLOR_SELECTION_POLICY
+          .compareToIgnoreCase(GraphInitColorPolicy.ROUND_ROBIN.toString()) == 0) {
         graphInitColorSelectionPolicy = GraphInitColorPolicy.ROUND_ROBIN;
       } else {
         throw new IllegalArgumentException("Initial color selection policy is not supported");
@@ -100,16 +104,17 @@ public class CLI {
     }
 
     return new Config().setRandNeighborsSampleSize(randNeighborsSampleSize)
-            .setDelta(DELTA)
-            .setNumPartitions(NUM_PARTITIONS)
-            .setUniformRandSampleSize(UNIFORM_RAND_SAMPLE_SIZE)
-            .setRounds(ROUNDS)
-            .setSeed(SEED)
-            .setTemperature(TEMPERATURE)
-            .setGraphFilePath(GRAPH)
-            .setNodeSelectionPolicy(nodeSelectionPolicy)
-            .setGraphInitialColorPolicy(graphInitColorSelectionPolicy)
-            .setOutputDir(OUTPUT_DIR)
-            .setAlpha(ALPHA);
+        .setDelta(DELTA)
+        .setNumPartitions(NUM_PARTITIONS)
+        .setUniformRandSampleSize(UNIFORM_RAND_SAMPLE_SIZE)
+        .setRounds(ROUNDS)
+        .setSeed(SEED)
+        .setTemperature(TEMPERATURE)
+        .setGraphFilePath(GRAPH)
+        .setNodeSelectionPolicy(nodeSelectionPolicy)
+        .setGraphInitialColorPolicy(graphInitColorSelectionPolicy)
+        .setOutputDir(OUTPUT_DIR)
+        .setAlpha(ALPHA)
+        .setAnnealing(ANNEALING);
   }
 }

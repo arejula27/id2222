@@ -20,6 +20,7 @@ public class Jabeja {
   private int round;
   private float T;
   private boolean resultFileCreated = false;
+  private boolean annealing;
 
   // -------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -29,6 +30,7 @@ public class Jabeja {
     this.numberOfSwaps = 0;
     this.config = config;
     this.T = config.getTemperature();
+    this.annealing = config.isAnnealing();
   }
 
   // -------------------------------------------------------------------
@@ -57,6 +59,10 @@ public class Jabeja {
       T = 1;
   }
 
+  public double acceptanceProb(double old_cost, double new_cost) {
+    return Math.exp((new_cost - old_cost) / T);
+  }
+
   /**
    * Sample and swap algorith at node p
    * 
@@ -76,8 +82,9 @@ public class Jabeja {
         || config.getNodeSelectionPolicy() == NodeSelectionPolicy.RANDOM) {
 
       // if local policy fails then randomly sample the entire graph
-      partner = findPartner(nodeId, getSample(nodeId));
-
+      if (partner == null) {
+        partner = findPartner(nodeId, getSample(nodeId));
+      }
     }
 
     // swap the colors
@@ -110,6 +117,12 @@ public class Jabeja {
       int dqp = getDegree(nodeq, nodep.getColor());
 
       double newd = Math.pow(dpq, config.getAlpha()) + Math.pow(dqp, config.getAlpha());
+
+      if (annealing) {
+        logger.info("TRUE annealing \n");
+      } else {
+        logger.info("FALSE annealing \n");
+      }
       if ((newd * T > oldd) && (newd > highest)) {
         highest = newd;
         bestPartner = nodeq;
