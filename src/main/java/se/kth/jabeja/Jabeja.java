@@ -119,11 +119,8 @@ public class Jabeja {
       double newd = Math.pow(dpq, config.getAlpha()) + Math.pow(dqp, config.getAlpha());
 
       if (annealing) {
-        logger.info("TRUE annealing \n");
-      } else {
-        logger.info("FALSE annealing \n");
-      }
-      if ((newd * T > oldd) && (newd > highest)) {
+
+      } else if ((newd * T > oldd) && (newd > highest)) {
         highest = newd;
         bestPartner = nodeq;
       }
