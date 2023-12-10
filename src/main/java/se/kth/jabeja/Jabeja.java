@@ -21,6 +21,9 @@ public class Jabeja {
   private float T;
   private boolean resultFileCreated = false;
   private boolean annealing;
+  private float T_min = 0.00001f;
+  private int MAX_ITER = 400;
+  private int counter = 0;
 
   // -------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -52,7 +55,22 @@ public class Jabeja {
    */
   private void saCoolDown() {
 
-    // TODO for second task
+    if (annealing) {
+      if (T > T_min) {
+        T = T * config.getDelta();
+      } else {
+        T = T_min;
+      }
+      if (T == T_min) {
+        counter++;
+        if (counter == MAX_ITER) {
+          T = 1;
+          counter = 0;
+        }
+      }
+
+    }
+
     if (T > 1)
       T -= config.getDelta();
     if (T < 1)
@@ -95,7 +113,6 @@ public class Jabeja {
       numberOfSwaps++;
     }
 
-    // saCoolDown(); ??
   }
 
   public Node findPartner(int nodeId, Integer[] nodes) {
@@ -119,6 +136,14 @@ public class Jabeja {
       double newd = Math.pow(dpq, config.getAlpha()) + Math.pow(dqp, config.getAlpha());
 
       if (annealing) {
+        double prob = acceptanceProb(oldd, newd);
+        // get a random number between 0 and 1
+        double rnd = getRandom();
+
+        if (prob > rnd && (newd > highest)) {
+          highest = prob;
+          bestPartner = nodeq;
+        }
 
       } else if ((newd * T > oldd) && (newd > highest)) {
         highest = newd;
@@ -127,6 +152,16 @@ public class Jabeja {
     }
 
     return bestPartner;
+  }
+
+  /**
+   * Get a random number between 0 and 1
+   * 
+   * @return
+   */
+  private double getRandom() {
+    return Math.random();
+
   }
 
   /**

@@ -10,4 +10,10 @@ fi
 
 gnuplot -e "filename='$1'" graph.gnuplot
 
-xdg-ninja graph.png
+#check is macos
+if [ "$(uname)" == "Darwin" ]; then
+	xdg-ninja graph.png
+else
+	xdg-open graph.png
+fi
+
