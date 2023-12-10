@@ -24,6 +24,7 @@ public class Jabeja {
   private float T_min = 0.00001f;
   private int MAX_ITER = 400;
   private int counter = 0;
+  private boolean improvement;
 
   // -------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -34,6 +35,7 @@ public class Jabeja {
     this.config = config;
     this.T = config.getTemperature();
     this.annealing = config.isAnnealing();
+    this.improvement = config.getImprovement();
   }
 
   // -------------------------------------------------------------------
@@ -78,6 +80,10 @@ public class Jabeja {
   }
 
   public double acceptanceProb(double old_cost, double new_cost) {
+    if (improvement) {
+      return 1 / (1 + Math.exp(-(new_cost - old_cost) / T));
+
+    }
     return Math.exp((new_cost - old_cost) / T);
   }
 

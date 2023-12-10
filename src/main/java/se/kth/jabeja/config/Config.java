@@ -14,6 +14,7 @@ public class Config {
   private NodeSelectionPolicy nodeSelectionPolicy;
   private Float alpha;
   private Boolean annealing;
+  private Boolean improvement;
 
   public Config setAlpha(Float alpha) {
     this.alpha = alpha;
@@ -78,6 +79,16 @@ public class Config {
   public Config setAnnealing(Boolean annealing) {
     this.annealing = annealing;
     return this;
+  }
+
+  public Config setImprovement(Boolean improvement) {
+    this.improvement = improvement;
+    return this;
+  }
+
+  public boolean getImprovement() {
+
+    return this.improvement;
   }
 
   public Integer getNumPartitions() {

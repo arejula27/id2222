@@ -42,6 +42,8 @@ public class CLI {
 
   @Option(name = "-annealing", usage = "Is simulated annealing")
   private boolean ANNEALING = false;
+  @Option(name = "-imp", usage = "Is simulated improvement")
+  private boolean IMP = false;
 
   @Option(name = "-randNeighborsSampleSize", usage = "Number of random neighbors sample size.")
   private int randNeighborsSampleSize = 3;
@@ -115,6 +117,7 @@ public class CLI {
         .setGraphInitialColorPolicy(graphInitColorSelectionPolicy)
         .setOutputDir(OUTPUT_DIR)
         .setAlpha(ALPHA)
+        .setImprovement(IMP)
         .setAnnealing(ANNEALING);
   }
 }
