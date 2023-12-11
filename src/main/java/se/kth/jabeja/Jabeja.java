@@ -63,6 +63,7 @@ public class Jabeja {
       } else {
         T = T_min;
       }
+
       if (T == T_min) {
         counter++;
         if (counter == MAX_ITER) {
@@ -71,12 +72,12 @@ public class Jabeja {
         }
       }
 
+    } else {
+      if (T > 1)
+        T -= config.getDelta();
+      if (T < 1)
+        T = 1;
     }
-
-    if (T > 1)
-      T -= config.getDelta();
-    if (T < 1)
-      T = 1;
   }
 
   public double acceptanceProb(double old_cost, double new_cost) {
